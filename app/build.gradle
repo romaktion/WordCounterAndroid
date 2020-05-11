@@ -82,7 +82,7 @@ task copyJNILibs(dependsOn: gitClone) {
 	}
 }
 
-preBuild.doFirst {
+task myCopyFiles {
 	copy {
 		from 'src/main/cpp/jniLibs/armeabi-v7a/lib/libiconv.so'
 		into "build/intermediates/cmake/debug/obj/armeabi-v7a"
@@ -92,3 +92,9 @@ preBuild.doFirst {
 		into "build/intermediates/cmake/debug/obj/arm64-v8a"
 	}
 }
+preBuild.dependsOn myCopyFiles
+
+task myClean(type: Delete) {
+	delete '/src/main/cpp/WordCounter'
+}
+clean.dependsOn myClean
