@@ -3,6 +3,7 @@ SET REP_PATH=src/main/cpp/WordCounter
 IF NOT EXIST %REP_PATH% goto GIT_CLONE
 
 cd %REP_PATH%
+git reset --hard
 git pull origin
 exit
 
