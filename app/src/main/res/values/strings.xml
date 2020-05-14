@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WordCounter</string>
+    <string name="file_picker">File Picker</string>
 </resources>
