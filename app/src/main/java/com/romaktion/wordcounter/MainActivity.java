@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View view) {
 
         Intent myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        myFileIntent.setType("*/*");
+        myFileIntent.setType("text/plain");
         startActivityForResult(myFileIntent, 10);
       }
     });
