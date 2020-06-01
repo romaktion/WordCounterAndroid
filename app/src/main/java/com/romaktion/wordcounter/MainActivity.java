@@ -32,11 +32,15 @@ public class MainActivity extends AppCompatActivity {
   }
   TextView textView;
   InputStream inputStream;
+  String IntermediateFolderName = File.separator + "WordCounter";
   String IntermediateFileDir = Environment.getExternalStorageDirectory().getPath()
-          + File.separator + "WordCounter";
+          + IntermediateFolderName;
   String IntermediateFilePath = Environment.getExternalStorageDirectory().getPath()
-          + File.separator + "WordCounter"
+          + IntermediateFolderName
           + File.separator + "temp.txt";
+
+  static int symbolAmount = 0;
+  static int wordCounter = 0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
    * which is packaged with this application.
    */
   public native String stringFromJNI();
+  public native boolean countWords(String inFilePath, String outFilePath,
+                                   String jniCallbackName);
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
           // You can use the API that requires the permission.
-          OpenFile();
+          fileManipulation();
         } else if (shouldShowRequestPermissionRationale(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
           // In an educational UI, explain to the user why your app requires this
@@ -117,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                                          @NonNull String[] permissions, @NonNull int[] grantResults) {
     if (requestCode == 1) {
       if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        OpenFile();
+        fileManipulation();
       }
       else {
         Toast.makeText(MainActivity.this, "Permission denied to write your External storage", Toast.LENGTH_SHORT).show();
@@ -125,10 +131,14 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void OpenFile() {
-    File file = new File(IntermediateFileDir);
-    if (!file.exists()) {
-      if (!file.mkdirs()) {
+  private void fileManipulation() {
+
+    long startTime = System.nanoTime();
+    
+    //open file
+    File dir = new File(IntermediateFileDir);
+    if (!dir.exists()) {
+      if (!dir.mkdirs()) {
         //TODO: Error handle
       }
     }
@@ -165,7 +175,29 @@ public class MainActivity extends AppCompatActivity {
       e.printStackTrace();
     }
 
-    textView.setText(IntermediateFilePath);
+    //count words
+    String outFilePath = IntermediateFileDir + File.separator + "out.txt";
+
+    boolean counted = countWords(IntermediateFilePath, outFilePath,
+            "countWordsCallback");
+
+    long duration = (System.nanoTime() - startTime) / 1000000;
+
+    if (counted) {
+      textView.setText("Output file: " + outFilePath + '\n'
+              + "Symbols amount: " + symbolAmount + '\n'
+              + "Words amount: " + wordCounter + '\n'
+              + "Counting time: " + duration + "ms");
+    }
+    else {
+      textView.setText("Word counter screwed up :(");
+    }
+  }
+
+  public static void countWordsCallback(int inSymbolAmount, int inWordCounter)
+  {
+    symbolAmount = inSymbolAmount;
+    wordCounter = inWordCounter;
   }
 
   @Override
@@ -176,4 +208,5 @@ public class MainActivity extends AppCompatActivity {
     if (file.exists())
       file.delete();
   }
+
 }

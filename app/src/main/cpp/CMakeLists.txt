@@ -8,9 +8,12 @@ cmake_minimum_required(VERSION 3.10.2)
 add_subdirectory("WordCounter")
 
 get_target_property(LIBTEXT_SOURCE libtext SOURCE_DIR)
-get_target_property(LIBTIMING_SOURCE libtiming SOURCE_DIR)
+get_target_property(LIBASYNC_SOURCE libasync SOURCE_DIR)
+get_target_property(LIBWORDCOUNTER_SOURCE libwordcounter SOURCE_DIR)
 
-include_directories(${LIBTEXT_SOURCE} ${LIBTIMING_SOURCE})
+include_directories(${LIBTEXT_SOURCE}
+        ${LIBASYNC_SOURCE}
+        ${LIBWORDCOUNTER_SOURCE})
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -30,5 +33,12 @@ find_library(log-lib log)
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
-target_include_directories(libwordcounter PRIVATE ${LIBTEXT_SOURCE} ${LIBTIMING_SOURCE})
-target_link_libraries(native-lib PUBLIC ${log-lib} libtext libtiming)
+target_include_directories(libwordcounter PRIVATE
+        ${LIBTEXT_SOURCE}
+        ${LIBASYNC_SOURCE}
+        ${LIBWORDCOUNTER_SOURCE})
+target_link_libraries(native-lib PUBLIC
+        ${log-lib}
+        libtext
+        libasync
+        libwordcounter)
