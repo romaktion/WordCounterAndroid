@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
    * which is packaged with this application.
    */
   public native String stringFromJNI();
-  public native boolean countWords(String inFilePath, String outFilePath,
-                                   String jniCallbackName);
+  public native boolean countWords(String inFilePath, String outFilePath);
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -178,8 +177,7 @@ public class MainActivity extends AppCompatActivity {
     //count words
     String outFilePath = IntermediateFileDir + File.separator + "out.txt";
 
-    boolean counted = countWords(IntermediateFilePath, outFilePath,
-            "countWordsCallback");
+    boolean counted = countWords(IntermediateFilePath, outFilePath);
 
     long duration = (System.nanoTime() - startTime) / 1000000;
 

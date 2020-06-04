@@ -73,7 +73,7 @@ Java_com_romaktion_wordcounter_MainActivity_stringFromJNI(
 extern "C" JNIEXPORT jboolean JNICALL
 Java_com_romaktion_wordcounter_MainActivity_countWords(
         JNIEnv* env,
-        jobject javaThis,
+        jobject/*this*/,
         jstring inFilePath,
         jstring outFilePath) {
 
