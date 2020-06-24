@@ -6,7 +6,6 @@
 #include <iostream>
 #include <fstream>
 #include "text.h"
-#include "await.h"
 #include "wordcounter.h"
 
 static jclass countWordsCallBackClass = nullptr;
@@ -81,11 +80,8 @@ Java_com_romaktion_wordcounter_MainActivity_countWords(
     auto outilepath = env->GetStringUTFChars(outFilePath, 0);
 
     //run wordcounter
-    const auto res = await([&infilepath]
-                           {
-                               auto queue = std::make_unique<wordcounter>(infilepath);
-                               return queue->get();
-                           });
+    auto queue = std::make_unique<wordcounter>(infilepath);
+    auto res = queue->get();
 
     if (res.symbol_amount == 0)
     {

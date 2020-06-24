@@ -8,11 +8,9 @@ cmake_minimum_required(VERSION 3.10.2)
 add_subdirectory("WordCounter")
 
 get_target_property(LIBTEXT_SOURCE libtext SOURCE_DIR)
-get_target_property(LIBASYNC_SOURCE libasync SOURCE_DIR)
 get_target_property(LIBWORDCOUNTER_SOURCE libwordcounter SOURCE_DIR)
 
 include_directories(${LIBTEXT_SOURCE}
-        ${LIBASYNC_SOURCE}
         ${LIBWORDCOUNTER_SOURCE})
 
 # Creates and names a library, sets it as either STATIC
@@ -35,10 +33,8 @@ find_library(log-lib log)
 # build script, prebuilt third-party libraries, or system libraries.
 target_include_directories(libwordcounter PRIVATE
         ${LIBTEXT_SOURCE}
-        ${LIBASYNC_SOURCE}
         ${LIBWORDCOUNTER_SOURCE})
 target_link_libraries(native-lib PUBLIC
         ${log-lib}
         libtext
-        libasync
         libwordcounter)
