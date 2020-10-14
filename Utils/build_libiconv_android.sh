@@ -133,7 +133,7 @@ rmdir $SOURCEDIR
 
 echo Now we need to install libtool for finish libs, please enter the sudo passwd!
 
-sudo apt-get -y install libtool
+sudo apt -y install libtool-bin
 
 libtool --finish $ARM64NAME/lib
 
