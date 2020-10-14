@@ -6,7 +6,7 @@ ARM64NAME=arm64-v8a
 I32NAME=x86
 I64NAME=x86_64
 
-export WORK_DIR=$PWD
+export WORK_DIR=$PWD/libiconv
 export API=26
 export ANDROID_NDK_ROOT=$HOME/Android/android-ndk
 
