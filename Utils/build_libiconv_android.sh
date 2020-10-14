@@ -21,6 +21,9 @@ if [ ! -f "$FILE" ]; then
     curl https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz --output $SOURCEDIR.tar.gz
 fi
 
+rm -rf $WORK_DIR/
+rmdir $SOURCEDIR
+
 #arm64-v8a*******************************************************************
 tar xzf $SOURCEDIR.tar.gz
 cd $SOURCEDIR
@@ -135,13 +138,13 @@ echo Now we need to install libtool for finish libs, please enter the sudo passw
 
 sudo apt -y install libtool-bin
 
-libtool --finish $ARM64NAME/lib
+libtool --finish $WORK_DIR/$ARM64NAME/lib
 
-libtool --finish $ARM32NAME/lib
+libtool --finish $WORK_DIR/$ARM32NAME/lib
 
-libtool --finish $I64NAME/lib
+libtool --finish $WORK_DIR/$I64NAME/lib
 
-libtool --finish $I32NAME/lib
+libtool --finish $WORK_DIR/$I32NAME/lib
 
 echo All done!
 
