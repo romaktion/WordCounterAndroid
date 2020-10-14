@@ -10,6 +10,17 @@ export WORK_DIR=$PWD
 export API=26
 export ANDROID_NDK_ROOT=$HOME/Android/android-ndk
 
+echo Now we need to install build-essential if not installed before, please enter the sudo passwd!
+
+sudo apt update
+sudo apt-get -y install build-essential
+sudo apt-get -y install curl
+
+FILE=$SOURCEDIR.tar.gz
+if [ ! -f "$FILE" ]; then
+    curl https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz --output $SOURCEDIR.tar.gz
+fi
+
 #arm64-v8a*******************************************************************
 tar xzf $SOURCEDIR.tar.gz
 cd $SOURCEDIR
