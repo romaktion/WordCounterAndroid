@@ -7,11 +7,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 add_subdirectory("WordCounter")
 
-get_target_property(LIBTEXT_SOURCE libtext SOURCE_DIR)
 get_target_property(LIBWORDCOUNTER_SOURCE libwordcounter SOURCE_DIR)
-
-include_directories(${LIBTEXT_SOURCE}
-        ${LIBWORDCOUNTER_SOURCE})
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
