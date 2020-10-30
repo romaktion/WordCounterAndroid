@@ -10,3 +10,5 @@ exit
 :GIT_CLONE
 
 git clone https://github.com/romaktion/WordCounter.git %REP_PATH%
+cd %REP_PATH%
+git submodule update --init
